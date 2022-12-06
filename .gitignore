@@ -128,3 +128,11 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# assets and outputs
+out/*
+!out/.gitkeep
+images/*
+!images/.gitkeep
+
+.DS_Store
