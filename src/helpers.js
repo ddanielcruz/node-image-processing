@@ -6,16 +6,27 @@ import { fileURLToPath } from 'url'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 const FOLDER_IMAGES = path.resolve(__dirname, '..', 'images')
+const FOLDER_OUTPUT = path.resolve(__dirname, '..', 'out')
 
-export async function listImages() {
+export async function listImages({ makeFolder = false } = {}) {
   const images = await fs.readdir(FOLDER_IMAGES)
+  const folder = path.resolve(FOLDER_OUTPUT, Date.now().toString())
+
+  if (makeFolder) {
+    await fs.mkdir(folder)
+  }
+
   return images
     .filter(filename => filename !== '.gitkeep')
-    .map(filename => path.resolve(FOLDER_IMAGES, filename))
+    .map(filename => ({
+      filename,
+      filepath: path.resolve(FOLDER_IMAGES, filename),
+      output: path.resolve(folder, filename)
+    }))
 }
 
 export function withTimer(label, promise) {
-  const coloredLabel = chalk.yellow(`[${label}]`)
+  const coloredLabel = chalk.green(`[${label}]`)
   return new Promise(async (resolve, reject) => {
     console.time(coloredLabel)
     try {
@@ -27,12 +38,4 @@ export function withTimer(label, promise) {
       console.timeEnd(coloredLabel)
     }
   })
-}
-
-export async function createFolder(name) {
-  // TODO Create a folder to host the processing results
-}
-
-export async function saveOutput(folder, name, data) {
-  // TODO Save file result to output folder
 }
