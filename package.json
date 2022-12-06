@@ -1,0 +1,14 @@
+{
+  "name": "image-processing",
+  "version": "1.0.0",
+  "description": "Basic image processing examples performed with Node.js for testing purposes.",
+  "type": "module",
+  "scripts": {},
+  "engines": {
+    "node": "18.x"
+  },
+  "dependencies": {
+    "chalk": "^5.1.2",
+    "sharp": "^0.31.2"
+  }
+}
