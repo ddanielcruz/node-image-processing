@@ -18,11 +18,17 @@ export async function listImages({ makeFolder = false } = {}) {
 
   return images
     .filter(filename => filename !== '.gitkeep')
-    .map(filename => ({
-      filename,
-      filepath: path.resolve(FOLDER_IMAGES, filename),
-      output: path.resolve(folder, filename)
-    }))
+    .map(filename => {
+      const [name, extension] = filename.split('.')
+      return {
+        name,
+        extension,
+        filename,
+        filepath: path.resolve(FOLDER_IMAGES, filename),
+        output: path.resolve(folder, filename),
+        folder
+      }
+    })
 }
 
 export function withTimer(label, promise) {
